@@ -39,8 +39,8 @@ ExternalProject_Add(${qimage2ndarray_NAME}
     PATCH_COMMAND       ${qimage2ndarray_PATCH}
     LIST_SEPARATOR      ^^
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} ${PYTHON_EXE} ${qimage2ndarray_SRC_DIR}/setup.py build
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} ${PYTHON_EXE} ${qimage2ndarray_SRC_DIR}/setup.py install --prefix=${PYTHON_PREFIX}
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} PYTHONPATH=${BUILDEM_PYTHONPATH} ${PYTHON_EXE} ${qimage2ndarray_SRC_DIR}/setup.py build
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} PYTHONPATH=${BUILDEM_PYTHONPATH} ${PYTHON_EXE} ${qimage2ndarray_SRC_DIR}/setup.py install --prefix=${PYTHON_PREFIX}
     BUILD_IN_SOURCE     1
 )
 
