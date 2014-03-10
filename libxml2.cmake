@@ -33,18 +33,13 @@ if (NOT libxml2_NAME)
         --enable-shared
         --without-python
         --with-sax1
-        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
-        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        LDFLAGS=${BUILDEM_LDFLAGS}
+        CPPFLAGS=-I${BUILDEM_DIR}/include
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
     #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check #FIXME: The make check step fails on Mac OS X!
     )
 
-  if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
-    set (libxml2_LIBRARIES ${BUILDEM_DIR}/lib/libxml2.dylib)
-  else()
-    set (libxml2_LIBRARIES ${BUILDEM_DIR}/lib/libxml2.so)
-  endif()
 
   endif(NOT libxml2_NAME)
   
