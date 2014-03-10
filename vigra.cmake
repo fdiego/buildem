@@ -31,7 +31,7 @@ endif()
 include (nose)
 
 # select the desired VIGRA commit
-set(DEFAULT_VIGRA_VERSION "494bd66423782280f31239b12dd2e7a6184d916b")
+set(DEFAULT_VIGRA_VERSION "05cf09388e28ab9db49fda3763500f128445897d") # from 2013-12-17
 IF(NOT DEFINED VIGRA_VERSION)
     SET(VIGRA_VERSION "${DEFAULT_VIGRA_VERSION}")
 ENDIF()
@@ -46,7 +46,7 @@ external_git_repo (vigra
 if("${VIGRA_VERSION}" STREQUAL "master")
     set(VIGRA_UPDATE_COMMAND git checkout master && git pull)
 else()
-    set(VIGRA_UPDATE_COMMAND git checkout ${VIGRA_VERSION})
+    set(VIGRA_UPDATE_COMMAND git fetch origin && git checkout ${VIGRA_VERSION})
 endif()
 
 set(VIGRA_CXX_FLAGS "")
@@ -60,6 +60,7 @@ ExternalProject_Add(${vigra_NAME}
     ${hdf5_NAME} ${python_NAME} ${boost_NAME} ${NUMPY_DEP} ${nose_NAME} 
     PREFIX              ${BUILDEM_DIR}
     GIT_REPOSITORY      ${vigra_URL}
+    GIT_TAG             ${vigra_TAG}
     #URL                 ${vigra_URL}
     #URL_MD5             ${vigra_MD5}
     UPDATE_COMMAND      ${VIGRA_UPDATE_COMMAND}
@@ -87,6 +88,8 @@ ExternalProject_Add(${vigra_NAME}
         -DFFTW3_LIBRARY=${BUILDEM_DIR}/lib/libfftw3.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
         "-DCMAKE_CXX_FLAGS=-pthread ${VIGRA_CXX_FLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         "-DCMAKE_CXX_LINK_FLAGS=-pthread ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        -DCMAKE_CXX_FLAGS_RELEASE=-O2\ -DNDEBUG # Some versions of gcc miscompile vigra at -O3
+        -DCMAKE_CXX_FLAGS_DEBUG="${CMAKE_CXX_FLAGS_DEBUG}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install

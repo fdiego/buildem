@@ -37,7 +37,7 @@ if (NOT libxml2_NAME)
         "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
-    #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
+    #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check #FIXME: The make check step fails on Mac OS X!
     )
 
   if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")

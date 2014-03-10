@@ -29,6 +29,8 @@ include (cylemon)
 include (yapsy)
 include (pgmlink)
 include (scikit-learn)
+include (nose)
+include (faulthandler)
 
 # select the desired ilastik commit
 set(DEFAULT_ILASTIK_VERSION "20131205")
@@ -47,21 +49,21 @@ set(lazyflow_SRC_DIR "${ilastik_SRC_DIR}/lazyflow")
 
 if("${ILASTIK_VERSION}" STREQUAL "master")
 
-    set(ILASTIK_UPDATE_COMMAND git checkout master && git pull && git submodule update --init --recursive
-                               cd lazyflow && git checkout master && git pull && git submodule update && cd .. &&
-                               cd volumina && git checkout master && git pull && cd .. &&
-                               cd ilastik && git checkout master && git pull && cd ..)
+    set(ILASTIK_UPDATE_COMMAND git checkout master && git pull origin master && git submodule update --init --recursive &&
+                               cd lazyflow && git checkout master && git pull origin master && git submodule update && cd .. &&
+                               cd volumina && git checkout master && git pull origin master && cd .. &&
+                               cd ilastik && git checkout master && git pull origin master && cd ..)
 
 else()
 
-    set(ILASTIK_UPDATE_COMMAND git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
+    set(ILASTIK_UPDATE_COMMAND git fetch && git checkout ${ILASTIK_VERSION} && git submodule update --init --recursive)
     
 endif()
     
 message ("Installing ${ilastik_NAME}/${ILASTIK_VERSION} into FlyEM build area: ${BUILDEM_DIR} ...")
 
-set (ilastik_dependencies ${vigra_NAME} ${h5py_NAME} ${psutil_NAME} 
-                            ${blist_NAME} ${greenlet_NAME} ${yapsy_NAME}
+set (ilastik_dependencies ${vigra_NAME} ${h5py_NAME} ${psutil_NAME} ${nose_NAME}
+                            ${blist_NAME} ${greenlet_NAME} ${yapsy_NAME} ${faulthandler_NAME}
                             ${cylemon_NAME} ${scikit-learn_NAME})
 
 if (${build_pgmlink})
@@ -77,6 +79,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         DEPENDS             ${ilastik_dependencies}
         SOURCE_DIR          ${ilastik_SRC_DIR}
         GIT_REPOSITORY      ${ilastik_URL}
+        GIT_TAG             ${ilastik_TAG}
         UPDATE_COMMAND      ${ILASTIK_UPDATE_COMMAND}
         PATCH_COMMAND       ""
         CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND}
@@ -100,6 +103,7 @@ else()
         DEPENDS             ${ilastik_dependencies}
         SOURCE_DIR          ${ilastik_SRC_DIR}
         GIT_REPOSITORY      ${ilastik_URL}
+        GIT_TAG             ${ilastik_TAG}
         UPDATE_COMMAND      ${ILASTIK_UPDATE_COMMAND}
         PATCH_COMMAND       ""
         CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND}

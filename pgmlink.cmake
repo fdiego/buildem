@@ -31,25 +31,20 @@ else()
     include (dlib)
     include (python)
 
-    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        # need other branch on macos
-        set(GIT_BRANCH "mac_os")
-        set(TEST_STRING "")
-    else (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-         set(GIT_BRANCH "master")
-         set(TEST_STRING "${BUILDEM_ENV_STRING} $(MAKE) test")
-    endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    
+    include (cplex-shared)
+
     external_git_repo (pgmlink
-        ${GIT_BRANCH}
+        364bef9a809fc533fff292c99d1c8eb489a3c591
         https://github.com/ilastik/pgmlink)
 
     message ("Installing ${pgmlink_NAME} into FlyEM build aread: ${BUILDEM_DIR} ...")
     ExternalProject_Add(${pgmlink_NAME}
         DEPENDS             ${ann_NAME} ${lemon_NAME} ${vigra_NAME} ${boost_NAME} ${opengm_NAME}
+                            ${cplex-shared} ${ilocplex-shared} ${concert-shared}
                             ${dlib_NAME}
         PREFIX              ${BUILDEM_DIR}
         GIT_REPOSITORY      ${pgmlink_URL}
+        GIT_TAG             ${pgmlink_TAG}
         UPDATE_COMMAND      ""
         PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
 			# Patch CMakeLists as it just overwrote the CXX_FLAGS

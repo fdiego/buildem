@@ -24,6 +24,7 @@ ExternalProject_Add(${opengm_NAME}
     DEPENDS             ${boost_NAME}
     PREFIX              ${BUILDEM_DIR}
     GIT_REPOSITORY      ${opengm_URL}
+    GIT_TAG             ${opengm_TAG}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
 			# This patch disables linking against the rt-lib on Mac for the combilp test
