@@ -21,6 +21,9 @@ external_git_repo (opengm
 
 if(CPLEX_ROOT_DIR)
     set(CMAKE_CPLEX_ROOT_DIR "-DCPLEX_ROOT_DIR=${CPLEX_ROOT_DIR}")
+    set(WITH_CPLEX ON)
+else()
+    set(WITH_CPLEX OFF)    
 endif()
 
 message ("Installing ${opengm_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
@@ -38,7 +41,7 @@ ExternalProject_Add(${opengm_NAME}
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
         -DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
-        -DWITH_CPLEX=ON
+        -DWITH_CPLEX=${WITH_CPLEX}
         -DWITH_BOOST=ON
         -DWITH_HDF5=ON
         -DBUILD_PYTHON_WRAPPER=ON
