@@ -32,8 +32,9 @@ ExternalProject_Add(${lemon_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
         # This patch fixes a build error that clang detects.
-        # (Already fixed in lemon trunk, but not in the tarball release.)
+        # Already fixed in lemon trunk, patch here in Ticket #480 ( https://lemon.cs.elte.hu/trac/lemon/attachment/ticket/480/51deaff8728a.patch ), but not in the tarball release.
     	${lemon_SRC_DIR}/lemon/graph_to_eps.h ${PATCH_DIR}/lemon.patch
+        ${lemon_SRC_DIR}/tools/lgf-gen.cc ${PATCH_DIR}/lemon-lgf-gen.patch
     	# Apparently one test file is missing from the release.
     	# This patch removes it from CMakeLists.txt
         ${lemon_SRC_DIR}/test/CMakeLists.txt ${PATCH_DIR}/lemon-test.patch
