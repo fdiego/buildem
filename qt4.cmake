@@ -9,7 +9,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (ExternalSource)
 include (BuildSupport)
-#include (PatchSupport)
+include (PatchSupport)  # Using PATCH_EXE so this include should be here.
 
 include(zlib)
 include(libpng)
@@ -112,4 +112,3 @@ endif()
 set_target_properties(${qt4_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT qt4_NAME)
-
