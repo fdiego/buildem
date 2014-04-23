@@ -82,7 +82,8 @@ ExternalProject_Add(${vtk_NAME}
     -DZLIB_LIBRARY=${BUILDEM_LIB_DIR}/libz.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
     
     # XCode Tools 5.1 moving forward no longer supports garbage collection ( -fobjc-gc flag ). However, Mac, AFAIK
-    # still supports Manual and Automatic Reference Counting. By setting VTK_REQUIRED_OBJCXX_FLAGS to "", manual
+    # still supports Manual and Automatic Reference Counting. According to VTK, version 6 will support automatic
+    # reference counting, but the version we are using does not. By setting VTK_REQUIRED_OBJCXX_FLAGS to "", manual
     # reference counting is used by VTK, which should work on other Mac OS versions.
     -DVTK_REQUIRED_OBJCXX_FLAGS=""
     
