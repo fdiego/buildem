@@ -10,7 +10,7 @@ include (ExternalProject)
 include (ExternalSource)
 
 external_git_repo (openblas
-    v0.2.8
+    4d42368214f2fd102b2d163c086e0f2d8c166dc6
     https://github.com/xianyi/OpenBLAS)
 
 message ("Installing ${openblas_NAME} into ilastik build area: ${BUILDEM_DIR} ...")
@@ -22,9 +22,11 @@ ExternalProject_Add(${openblas_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       $(MAKE) NO_AVX=1 NO_AFFINITY=1 -j8
+    # Add TARGET=xxx (where xxx is an architecture) to the BUILD_COMMAND to optimize and/or avoid particular build errors. See README_openblas.txt for details.
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE) NO_AVX=1 NO_AFFINITY=1 -j8
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     $(MAKE) PREFIX=${BUILDEM_DIR} install &&
+    # Add TARGET=xxx (where xxx is an architecture) to the BUILD_COMMAND to optimize and/or avoid particular build errors. See README_openblas.txt for details.
+    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) PREFIX=${BUILDEM_DIR} install &&
                         ln -fs libopenblas.so ${BUILDEM_DIR}/lib/libblas.so &&
                         ln -fs libopenblas.so ${BUILDEM_DIR}/lib/liblapack.so
 )

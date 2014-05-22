@@ -9,7 +9,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (ExternalSource)
 include (BuildSupport)
-#include (PatchSupport)
+include (PatchSupport)  # Using PATCH_EXE so this include should be here.
 
 include(zlib)
 include(libpng)
@@ -46,6 +46,10 @@ ExternalProject_Add(${qt4_NAME}
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
 			# This patch fixes ilastik crashes on OSX due to an ill-shaped ellipse
 			${qt4_SRC_DIR}/src/gui/painting/qpaintengine_mac.cpp ${PATCH_DIR}/qt4-osx-draw-ellipse.patch
+			# This patch fixes removes Xarch_x86_64 flags from the Qt4 configure file. These flags are not appropriate for Mavericks and cause Qt4 to fail building.
+			${qt4_SRC_DIR}/configure ${PATCH_DIR}/qt4-osx-mavericks-configure.patch
+			# This patch fixes removes Xarch_x86_64 flags from the Qt4 gui.pro file. These flags are not appropriate for Mavericks and cause Qt4 to fail building.
+			${qt4_SRC_DIR}/src/gui/gui.pro ${PATCH_DIR}/qt4-osx-mavericks-gui-pro.patch
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} env CXXFLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS} echo "yes" | ${qt4_SRC_DIR}/configure # pipe "yes" to stdin to accept the license.
         --prefix=${BUILDEM_DIR}
         -opensource
@@ -108,4 +112,3 @@ endif()
 set_target_properties(${qt4_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT qt4_NAME)
-

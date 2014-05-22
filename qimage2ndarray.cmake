@@ -9,7 +9,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (ExternalSource)
 include (BuildSupport)
-#include (PatchSupport)
 
 include (numpy)
 include (pyqt4)
@@ -18,7 +17,7 @@ include (pyqt4)
 #  it doesn't have an /include directory!
 # Instead, we pull directly from github.
 external_git_repo (qimage2ndarray
-    release-1.3
+    release-1.3 # beaa2eca4605be443f78d6dd5cd2d4be8081d0dc
     https://github.com/hmeine/qimage2ndarray)
 
 message ("Installing ${qimage2ndarray_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
