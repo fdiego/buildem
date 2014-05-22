@@ -1,4 +1,4 @@
-The BuildEM System
+The BuildEM System [![Picture](https://raw.github.com/janelia-flyem/janelia-flyem.github.com/master/images/jfrc_grey_180x40.png)](http://www.janelia.org)
 ==================
 
 The [buildem](https://github.com/janelia-flyem/buildem) repo is a modular CMake-based system that leverages [CMake's ExternalProject](http://www.kitware.com/media/html/BuildingExternalProjectsWithCMake2.8.html) to simplify and automate a complex build process.  Its goal is to allow *simple*, *modular* specification of software dependencies and automate the download, patch, configure, build, and install process.  Initially, we are focused on Linux (and occasionally MacOS X) support for the modules, but we hope to integrate patches from Windows users as needed.
@@ -311,8 +311,8 @@ To build on the cluster, login to a compute node and set the environment variabl
 
 ```bash
 export FLYEMCLUSTER=/groups/flyem/proj/builds/cluster
-export PATH=/usr/local/cmake-2.8.8/bin:/usr/local/git-1.8.1/bin:$FLYEMCLUSTER/bin:$PATH
-export LD_LIBRARY_PATH=$FLYEMCLUSTER/lib:$LD_LIBRARY_PATH
+export PATH=/usr/local/gcc/bin:/usr/local/cmake-2.8.8/bin:/usr/local/git-1.8.1/bin:$FLYEMCLUSTER/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/gcc/lib64:$FLYEMCLUSTER/lib:$LD_LIBRARY_PATH
 export PYTHONPATH=$FLYEMCLUSTER/lib/python2.7:$FLYEMCLUSTER/lib/python2.7/site-packages:$FLYEMCLUSTER/lib
 ```
 
