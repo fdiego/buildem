@@ -9,6 +9,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (BuildSupport)
 include (ExternalSource)
+include (PatchSupport)  # Using PATCH_EXE so this include should be here.
 
 include (python)
 include (zlib)
@@ -28,8 +29,9 @@ set (boost_LIBS ${BUILDEM_LIB_DIR}/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTE
                 ${BUILDEM_LIB_DIR}/libboost_python.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_unit_test_framework.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_filesystem.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
-                ${BUILDEM_LIB_DIR}/libboost_chrono.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
-                ${BUILDEM_LIB_DIR}/libboost_atomic.${BUILDEM_PLATFORM_DYLIB_EXTENSION} )
+				${BUILDEM_LIB_DIR}/libboost_chrono.${BUILDEM_PLATFORM_DYLIB_EXTENSION} 
+				${BUILDEM_LIB_DIR}/libboost_atomic.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+			)
 
 # Add layout=tagged param to first boost install to explicitly create -mt libraries
 # some libraries require.  TODO: Possibly shore up all library find paths to only
@@ -41,7 +43,10 @@ ExternalProject_Add(${boost_NAME}
     URL                 ${boost_URL}
     URL_MD5             ${boost_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
+    PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
+			# these two patches fix a problem with clang3.4
+			${boost_SRC_DIR}/boost/atomic/detail/gcc-atomic.hpp ${PATCH_DIR}/boost-clang34-part1.patch
+			${boost_SRC_DIR}/boost/atomic/detail/cas128strong.hpp ${PATCH_DIR}/boost-clang34-part2.patch
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./bootstrap.sh 
         --with-libraries=date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono,atomic
         --with-python=${PYTHON_EXE} 
