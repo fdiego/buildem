@@ -94,7 +94,7 @@ ExternalProject_Add(${qt4_NAME}
         -system-libpng
         -system-libjpeg
         -system-libtiff
-        -I${BUILDEM_DIR}/include
+        -I${BUILDEM_DIR}/include -I${BUILDEM_DIR}/include/freetype2
         -L${BUILDEM_DIR}/lib
         ${EXTRA_QT4_CONFIG_FLAGS}
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
