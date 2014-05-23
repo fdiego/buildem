@@ -49,7 +49,7 @@ if (NOT EXISTS ${BUILDEM_SRC_DIR})
     file (MAKE_DIRECTORY ${BUILDEM_SRC_DIR})
 endif ()
 
-if (NOT EXISTS /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk)
+if ((${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") AND (NOT EXISTS /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk))
 	message (FATAL_ERROR "ERROR: XCode and the OSX 10.9 SDK have to be installed. Please install XCode from the AppStore")
 endif ()
 
