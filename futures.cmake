@@ -1,5 +1,5 @@
 #
-# Install futures library from source.
+# Install futures library from source
 #
 
 if (NOT futures_NAME)
@@ -17,10 +17,9 @@ external_source (futures
     2.1.6
     futures-2.1.6.tar.gz
     cfab9ac3cd55d6c7ddd0546a9f22f453
-    https://pypi.python.org/packages/source/f/futures/futures-2.1.6.tar.gz)
+    https://pypi.python.org/packages/source/f/futures)
 
-
-message ("Installing ${futures_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
+message ("Installing ${futures_NAME} into ilastik build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${futures_NAME}
     DEPENDS             ${python_NAME} ${setuptools_NAME}
     PREFIX              ${BUILDEM_DIR}
@@ -37,4 +36,6 @@ ExternalProject_Add(${futures_NAME}
 
 set_target_properties(${futures_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
+
 endif (NOT futures_NAME)
+
