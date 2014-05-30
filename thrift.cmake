@@ -44,8 +44,8 @@ ExternalProject_Add(${thrift_NAME}
         --with-perl=no
         --with-ruby=no
         PY_PREFIX=${PYTHON_PREFIX}
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install

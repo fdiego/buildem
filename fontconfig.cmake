@@ -35,7 +35,8 @@ if (NOT fontconfig_NAME)
         --prefix=${BUILDEM_DIR}
         --enable-shared
         --enable-libxml2
-        LDFLAGS=-L${BUILDEM_DIR}/lib
+        "LDFLAGS=-L${BUILDEM_DIR}/lib ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLags=${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         LIBXML2_CFLAGS=-I${BUILDEM_DIR}/include/libxml2 LIBXML2_LIBS=-lxml2
         FREETYPE_CFLAGS=-I${BUILDEM_DIR}/include/freetype2 FREETYPE_LIBS=-lfreetype
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)

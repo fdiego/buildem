@@ -1,0 +1,18 @@
+diff --git a/src/unittest/inference/CMakeLists.txt b/src/unittest/inference/CMakeLists.txt
+index d2d3970..73cc575 100644
+--- a/src/unittest/inference/CMakeLists.txt
++++ b/src/unittest/inference/CMakeLists.txt
+@@ -127,7 +127,12 @@ if(WITH_CPLEX)
+   else()
+     target_link_libraries(test-lpcplex ${CMAKE_THREAD_LIBS_INIT} ${CPLEX_LIBRARIES} )
+     #target_link_libraries(test-lpcplex2 ${CMAKE_THREAD_LIBS_INIT} ${CPLEX_LIBRARIES}
+-    target_link_libraries(test-combilp ${CMAKE_THREAD_LIBS_INIT} ${CPLEX_LIBRARIES} ${HDF5_LIBRARIES} rt) 
++    
++    if(LINK_RT)
++    	target_link_libraries(test-combilp ${CMAKE_THREAD_LIBS_INIT} ${CPLEX_LIBRARIES} ${HDF5_LIBRARIES} rt) 
++    else()
++    	target_link_libraries(test-combilp ${CMAKE_THREAD_LIBS_INIT} ${CPLEX_LIBRARIES} ${HDF5_LIBRARIES}) 
++    endif()
+   endif()
+   add_test(test-lpcplex ${CMAKE_CURRENT_BINARY_DIR}/test-lpcplex)
+   #add_test(test-lpcplex2 ${CMAKE_CURRENT_BINARY_DIR}/test-lpcplex2)

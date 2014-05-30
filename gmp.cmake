@@ -1,5 +1,6 @@
 #
-# Install gmp from source
+# Install gmp from source.
+# Provides multiple precision support.
 #
 
 if (NOT gmp_NAME)
@@ -25,8 +26,8 @@ ExternalProject_Add(${gmp_NAME}
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${gmp_SRC_DIR}/configure
         --prefix=${BUILDEM_DIR}
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
     TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check

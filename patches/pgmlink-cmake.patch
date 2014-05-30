@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f548f8f..aa4c603 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -110,7 +110,7 @@ if(NOT CMAKE_BUILD_TYPE)
+ endif(NOT CMAKE_BUILD_TYPE)
+ 
+ if(NOT MSVC)
+-  set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wfatal-errors -std=c++98 -pedantic -pthread")
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wfatal-errors -std=c++98 -pedantic -pthread")
+   set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
+   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+     # Clang is too strict to use -Werror (boost::serialization has warnings...)

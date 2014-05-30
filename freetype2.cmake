@@ -28,8 +28,8 @@ ExternalProject_Add(${freetype2_NAME}
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./configure 
         --prefix=${BUILDEM_DIR} 
         --enable-shared
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install

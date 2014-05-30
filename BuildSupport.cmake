@@ -49,11 +49,15 @@ if (NOT EXISTS ${BUILDEM_SRC_DIR})
     file (MAKE_DIRECTORY ${BUILDEM_SRC_DIR})
 endif ()
 
+if ((${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") AND (NOT EXISTS /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk))
+	message (FATAL_ERROR "ERROR: XCode and the OSX 10.9 SDK have to be installed. Please install XCode from the AppStore")
+endif ()
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # Important to use FALLBACK variable.
     # https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryUsageGuidelines.html
     set (BUILDEM_LD_LIBRARY_VAR "DYLD_FALLBACK_LIBRARY_PATH")
-    set (BUILDEM_PLATFORM_SPECIFIC_ENV "MACOSX_DEPLOYMENT_TARGET=10.5")
+    set (BUILDEM_PLATFORM_SPECIFIC_ENV "MACOSX_DEPLOYMENT_TARGET=10.9")
     set (BUILDEM_PLATFORM_DYLIB_EXTENSION "dylib")
 else()
     set (BUILDEM_LD_LIBRARY_VAR "LD_LIBRARY_PATH")
@@ -64,7 +68,7 @@ endif()
 # Initialize environment variables string to use for commands.
 set (BUILDEM_BIN_PATH     ${BUILDEM_BIN_DIR}:$ENV{PATH})
 set (BUILDEM_LIB_PATH     ${BUILDEM_LIB_DIR}:$ENV{${BUILDEM_LD_LIBRARY_VAR}})
-set (BUILDEM_ENV_STRING   env PATH=${BUILDEM_BIN_PATH} ${BUILDEM_LD_LIBRARY_VAR}=${BUILDEM_LIB_PATH} ${BUILDEM_PLATFORM_SPECIFIC_ENV} CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER})
+set (BUILDEM_ENV_STRING   env PATH=${BUILDEM_BIN_PATH} ${BUILDEM_LD_LIBRARY_VAR}=${BUILDEM_LIB_PATH} ${BUILDEM_PLATFORM_SPECIFIC_ENV} CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} PYTHONPATH=${BUILDEM_PYTHONPATH})
 set (BUILDEM_LDFLAGS      "-Wl,-rpath,${BUILDEM_LIB_DIR} -L${BUILDEM_LIB_DIR}")
 
 # All library builds should go to BPD/lib

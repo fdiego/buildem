@@ -39,11 +39,18 @@ ExternalProject_Add(${ilmbase_NAME}
     PATCH_COMMAND       ${ilmbase_PATCH_COMMAND}
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${ilmbase_SRC_DIR}/configure 
         --prefix=${BUILDEM_DIR}
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS}"
+        "CXXFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
+
+if (${BUILDEM_ADDITIONAL_CXX_FLAGS} MATCHES "libstdc")
+	ExternalProject_Add_Step(${ilmbase_NAME} ${ilmbase_NAME}-configure-stdlib
+	   COMMAND bash ${PATCH_DIR}/ilmbase-fix-makefiles-stdlib.sh ${ilmbase_SRC_DIR}/../ilmbase-1.0.2-build
+	   DEPENDEES configure
+	)
+endif()
 
 set_target_properties(${ilmbase_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 

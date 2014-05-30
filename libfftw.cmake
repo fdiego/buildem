@@ -27,7 +27,7 @@ ExternalProject_Add(${libfftw_NAME}
         --prefix=${BUILDEM_DIR}
         --enable-shared
         LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
@@ -42,8 +42,8 @@ ExternalProject_Add_Step(${libfftw_NAME} singlefloat-configure
         --prefix=${BUILDEM_DIR}
         --enable-shared
         --enable-float  # This creates libfftw3f single-precision libraries INSTEAD OF the default double libraries.
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
 )
 
 # build single-precision

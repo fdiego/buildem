@@ -32,7 +32,7 @@ ExternalProject_Add(${cylemon_NAME}
     GIT_TAG             ${cylemon_TAG}
     UPDATE_COMMAND      ""
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${BUILDEM_ENV_STRING} ${PYTHON_EXE} 
+    BUILD_COMMAND       ${BUILDEM_ENV_STRING} env "CPPFLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}" "LDFLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}" ${PYTHON_EXE} 
     	setup.py --no-extra-includes ${cylemon_SPECIAL_SETUP} build build_ext -I${BUILDEM_INCLUDE_DIR} -L${BUILDEM_LIB_DIR}
     BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} ${PYTHON_EXE} setup.py install

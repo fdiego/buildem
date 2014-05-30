@@ -96,6 +96,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
             -DLIBRARY_OUTPUT_PATH=${lazyflow_SRC_DIR}/lazyflow/drtile
             -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
             -DPYTHON_EXECUTABLE=${PYTHON_EXE}
+            -DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
             -DPYTHON_INCLUDE_DIR=${PYTHON_PREFIX}/include/python2.7
             "-DPYTHON_LIBRARY=${PYTHON_PREFIX}/lib/libpython2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION}"
             -DPYTHON_NUMPY_INCLUDE_DIR=${PYTHON_PREFIX}/lib/python2.7/site-packages/numpy/core/include

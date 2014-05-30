@@ -1,0 +1,14 @@
+--- tif_config.h.in	2012-10-15 22:33:21.000000000 +0200
++++ ../../../../vtk-5.10.1/Utilities/vtktiff/tif_config.h.in	2013-12-05 17:24:47.000000000 +0100
+@@ -241,8 +241,9 @@
+ /* Define to `__inline__' or `__inline' if that's what the C compiler
+    calls it, or to nothing if 'inline' is not supported under any name.  */
+ #ifndef __cplusplus
+-#define inline
+-//#cmakedefine inline
++#	ifdef _MSC_VER
++#		define inline
++#	endif
+ #endif
+ 
+ /* Define to `long' if <sys/types.h> does not define. */

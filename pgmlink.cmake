@@ -46,11 +46,16 @@ else()
         GIT_REPOSITORY      ${pgmlink_URL}
         GIT_TAG             ${pgmlink_TAG}
         UPDATE_COMMAND      ""
-        PATCH_COMMAND       ""
+        PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
+			# Patch CMakeLists as it just overwrote the CXX_FLAGS
+			${pgmlink_SRC_DIR}/CMakeLists.txt ${PATCH_DIR}/pgmlink-cmake.patch
     
         CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${pgmlink_SRC_DIR} 
             -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
             -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
+            "-DCMAKE_CXX_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS} -ftemplate-depth=512"
+            -DCMAKE_EXE_LINKER_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
+            -DCMAKE_SHARED_LINKER_FLAGS=${BUILDEM_ADDITIONAL_CXX_FLAGS}
             -DWITH_PYTHON=ON
             -DWITH_TESTS=ON
             -DWITH_CHECKED_STL=OFF

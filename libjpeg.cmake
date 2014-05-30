@@ -25,8 +25,8 @@ ExternalProject_Add(${libjpeg_NAME}
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./configure 
         --prefix=${BUILDEM_DIR} 
         --enable-shared
-        LDFLAGS=${BUILDEM_LDFLAGS}
-        CPPFLAGS=-I${BUILDEM_DIR}/include
+        "LDFLAGS=${BUILDEM_LDFLAGS} ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
+        "CPPFLAGS=-I${BUILDEM_DIR}/include ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE) LIBTOOL=./libtool # Must use the libtool that is built in place by the libjpeg Makfile (not the system libtool!)
     BUILD_IN_SOURCE     1
     TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
