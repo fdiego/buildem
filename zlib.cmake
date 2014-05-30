@@ -18,7 +18,7 @@ external_source (zlib
 
 if (APPLE)
     set (ZLIB_INSTALL_CMD ${BUILDEM_ENV_STRING} $(MAKE) install 
-         && ln -s ${BUILDEM_LIB_DIR}/libz.so ${BUILDEM_LIB_DIR}/libz.dylib)
+         && ln -sf ${BUILDEM_LIB_DIR}/libz.so ${BUILDEM_LIB_DIR}/libz.dylib)
 else()
     set (ZLIB_INSTALL_CMD ${BUILDEM_ENV_STRING} $(MAKE) install)
 endif()
