@@ -16,6 +16,13 @@ external_source (zlib
     60df6a37c56e7c1366cca812414f7b85
     http://zlib.net)
 
+if (APPLE)
+    set (ZLIB_INSTALL_CMD ${BUILDEM_ENV_STRING} $(MAKE) install 
+         && ln -s ${BUILDEM_LIB_DIR}/libz.so ${BUILDEM_LIB_DIR}/libz.dylib)
+else()
+    set (ZLIB_INSTALL_CMD ${BUILDEM_ENV_STRING} $(MAKE) install)
+endif()
+
 message ("Installing ${zlib_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${zlib_NAME}
     PREFIX              ${BUILDEM_DIR}
@@ -36,7 +43,7 @@ ExternalProject_Add(${zlib_NAME}
 
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
     BUILD_IN_SOURCE     1 # Configure script reqiures BUILD_IN_SOURCE
-    INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
+    INSTALL_COMMAND   ${ZLIB_INSTALL_CMD}  
 )
 
 set_target_properties(${zlib_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
