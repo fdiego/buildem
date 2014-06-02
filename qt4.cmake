@@ -41,7 +41,7 @@ ExternalProject_Add(${qt4_NAME}
     DEPENDS             ${freetype2_NAME} ${zlib_NAME} ${libpng_NAME} ${libjpeg_NAME} ${libtiff_NAME}
     PREFIX              ${BUILDEM_DIR}
 	GIT_REPOSITORY	${qt4_URL}
-	GIT_TAG			4.8
+	GIT_TAG		${qt4_TAG}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${BUILDEM_ENV_STRING} ${PATCH_EXE}
 			# This patch fixes ilastik crashes on OSX due to an ill-shaped ellipse
