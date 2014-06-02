@@ -18,7 +18,7 @@ include(libtiff)
 include(freetype2)
 
 external_git_repo(qt4
-	136ab6592f8034e3954fb8842ed6e2f40cee2b86 #4.8 #682ed9df439481e1f8e8651c4aa06f1b455a2080
+	682ed9df439481e1f8e8651c4aa06f1b455a2080 #4.8
 	https://github.com/qtproject/qt)
 
 message ("Installing ${qt4_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
