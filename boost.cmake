@@ -17,10 +17,10 @@ set (boost_INCLUDE_DIR  ${BUILDEM_INCLUDE_DIR}/boost)
 include_directories (${boost_INCLUDE_DIR})
 
 external_source (boost
-    1_51_0
-    boost_1_51_0.tar.gz
-    6a1f32d902203ac70fbec78af95b3cf8
-    http://downloads.sourceforge.net/project/boost/boost/1.51.0)
+    1_56_0
+    boost_1_56_0.tar.bz2
+    a744cf167b05d72335f27c88115f211d
+    http://hivelocity.dl.sourceforge.net/project/boost/boost/1.56.0)
 
 set (boost_LIBS ${BUILDEM_LIB_DIR}/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTENSION} 
                 ${BUILDEM_LIB_DIR}/libboost_system.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
