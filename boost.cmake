@@ -22,7 +22,8 @@ external_source (boost
     a744cf167b05d72335f27c88115f211d
     http://hivelocity.dl.sourceforge.net/project/boost/boost/1.56.0)
 
-set (boost_LIBS ${BUILDEM_LIB_DIR}/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTENSION} 
+set (boost_LIBS ${BUILDEM_LIB_DIR}/libboost_container.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+                ${BUILDEM_LIB_DIR}/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_system.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_program_options.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
                 ${BUILDEM_LIB_DIR}/libboost_python.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
@@ -42,7 +43,7 @@ ExternalProject_Add(${boost_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ./bootstrap.sh 
-        --with-libraries=date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono
+        --with-libraries=container,date_time,filesystem,python,regex,serialization,system,test,thread,program_options,chrono
         --with-python=${PYTHON_EXE} 
         --prefix=${BUILDEM_DIR}
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} ./b2
