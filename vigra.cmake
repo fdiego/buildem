@@ -64,7 +64,7 @@ ExternalProject_Add(${vigra_NAME}
     #URL                 ${vigra_URL}
     #URL_MD5             ${vigra_MD5}
     UPDATE_COMMAND      ${VIGRA_UPDATE_COMMAND}
-    PATCH_COMMAND       ""       
+    PATCH_COMMAND       ""
     LIST_SEPARATOR      ^^
     CONFIGURE_COMMAND   ${BUILDEM_ENV_STRING} ${CMAKE_COMMAND} ${vigra_SRC_DIR} 
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
