@@ -31,7 +31,7 @@ endif()
 include (nose)
 
 # select the desired VIGRA commit
-set(DEFAULT_VIGRA_VERSION "05cf09388e28ab9db49fda3763500f128445897d") # from 2013-12-17
+set(DEFAULT_VIGRA_VERSION "4510b643cbf1d62d1b9111c53236919eb1c2d063") # from 2014-07-02
 IF(NOT DEFINED VIGRA_VERSION)
     SET(VIGRA_VERSION "${DEFAULT_VIGRA_VERSION}")
 ENDIF()
@@ -49,12 +49,20 @@ else()
     set(VIGRA_UPDATE_COMMAND git fetch origin && git checkout ${VIGRA_VERSION})
 endif()
 
-set(VIGRA_CXX_FLAGS "")
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	set(VIGRA_CXX_FLAGS "-ftemplate-depth=1024")	
+ 
+if (APPLE)
+	set (DEFAULT_VIGRA_WITH_BOOST_THREAD 1)
+else()
+	set (DEFAULT_VIGRA_WITH_BOOST_THREAD 0)
 endif()
+set(VIGRA_WITH_BOOST_THREAD ${DEFAULT_VIGRA_WITH_BOOST_THREAD} 
+	CACHE BOOL "Build Vigra with boost-thread instead of std c++11 thread")
+set(VIGRA_THREAD_SETTING "-DWITH_BOOST_THREAD=${VIGRA_WITH_BOOST_THREAD}")
 
 message ("Installing ${vigra_NAME}/${VIGRA_VERSION} into FlyEM build area: ${BUILDEM_DIR} ...")
+message ("**********************************************************************************")
+message ("***** WARNING: vigra test step SKIPPED for now.  Edit vigra.cmake to change. *****")
+message ("**********************************************************************************")
 ExternalProject_Add(${vigra_NAME}
     DEPENDS             ${libjpeg_NAME} ${libtiff_NAME} ${libpng_NAME} ${openexr_NAME} ${libfftw_NAME}
     ${hdf5_NAME} ${python_NAME} ${boost_NAME} ${NUMPY_DEP} ${nose_NAME} 
@@ -70,20 +78,44 @@ ExternalProject_Add(${vigra_NAME}
         -DCMAKE_INSTALL_PREFIX=${BUILDEM_DIR}
         -DCMAKE_PREFIX_PATH=${BUILDEM_DIR}
         -DCMAKE_EXE_LINKER_FLAGS=${BUILDEM_LDFLAGS}
+        
+        ${VIGRA_THREAD_SETTING}
+
+        -DWITH_VIGRANUMPY=${WITH_VIGRANUMPY}
         -DDEPENDENCY_SEARCH_PREFIX=${BUILDEM_DIR}
+
         -DBoost_INCLUDE_DIR=${BUILDEM_DIR}/include
         -DBoost_LIBRARY_DIRS=${BUILDEM_DIR}/lib
- #       -DBoost_PYTHON_LIBRARY=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
- #       -DBoost_PYTHON_LIBRARY_RELEASE=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
- #       -DBoost_PYTHON_LIBRARY_DEBUG=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
-         -DVIGRANUMPY_LIBRARIES=${PYTHON_PREFIX}/lib/libpython2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION}^^${BUILDEM_DIR}/lib/libboost_python.${BUILDEM_PLATFORM_DYLIB_EXTENSION}^^${BUILDEM_DIR}/lib/libboost_container.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DBoost_PYTHON_LIBRARY=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DBoost_PYTHON_LIBRARY_RELEASE=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DBoost_PYTHON_LIBRARY_DEBUG=${BUILDEM_DIR}/lib/libboost_python-mt.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+
+        -DPYTHON_EXECUTABLE=${PYTHON_EXE}
+        -DPYTHON_INCLUDE_PATH=${PYTHON_PREFIX}/include
+        -DPYTHON_LIBRARIES=${PYTHON_PREFIX}/lib/libpython.2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DPYTHON_NUMPY_INCLUDE_DIR=${PYTHON_PREFIX}/lib/python2.7/site-packages/numpy/core/include
+        -DPYTHON_SPHINX=${PYTHON_PREFIX}/bin/sphinx-build
+
+        -DVIGRANUMPY_LIBRARIES=${PYTHON_PREFIX}/lib/libpython2.7.${BUILDEM_PLATFORM_DYLIB_EXTENSION}^^${BUILDEM_DIR}/lib/libboost_python.${BUILDEM_PLATFORM_DYLIB_EXTENSION}^^${BUILDEM_DIR}/lib/libboost_thread.${BUILDEM_PLATFORM_DYLIB_EXTENSION}^^${BUILDEM_DIR}/lib/libboost_system.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DVIGRANUMPY_INSTALL_DIR=${PYTHON_PREFIX}/lib/python2.7/site-packages
+
+        -DPNG_LIBRARY=${BUILDEM_DIR}/lib/libpng.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DPNG_PNG_INCLUDE_DIR=${BUILDEM_DIR}/include
+
+        -DTIFF_LIBRARY=${BUILDEM_DIR}/lib/libtiff.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+        -DTIFF_INCLUDE_DIR=${BUILDEM_DIR}/include
+
         -DJPEG_INCLUDE_DIR=${BUILDEM_DIR}/include
         -DJPEG_LIBRARY=${BUILDEM_DIR}/lib/libjpeg.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+
         -DHDF5_CORE_LIBRARY=${BUILDEM_DIR}/lib/libhdf5.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
         -DHDF5_HL_LIBRARY=${BUILDEM_DIR}/lib/libhdf5_hl.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
         -DHDF5_INCLUDE_DIR=${BUILDEM_DIR}/include
+        
+        -DZLIB_INCLUDE_DIR=${BUILDEM_DIR}/include
+        -DZLIB_LIBRARY=${BUILDEM_DIR}/lib/libz.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
+
         -DFFTW3F_INCLUDE_DIR=${BUILDEM_DIR}/include
-        -DWITH_VIGRANUMPY=${WITH_VIGRANUMPY}
         -DFFTW3F_LIBRARY=${BUILDEM_DIR}/lib/libfftw3f.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
         -DFFTW3_INCLUDE_DIR=${BUILDEM_DIR}/include
         -DFFTW3_LIBRARY=${BUILDEM_DIR}/lib/libfftw3.${BUILDEM_PLATFORM_DYLIB_EXTENSION}
@@ -91,8 +123,10 @@ ExternalProject_Add(${vigra_NAME}
         "-DCMAKE_CXX_LINK_FLAGS=-pthread ${BUILDEM_ADDITIONAL_CXX_FLAGS}"
         -DCMAKE_CXX_FLAGS_RELEASE=-O2\ -DNDEBUG # Some versions of gcc miscompile vigra at -O3
         -DCMAKE_CXX_FLAGS_DEBUG="${CMAKE_CXX_FLAGS_DEBUG}"
+        
+        
     BUILD_COMMAND       ${BUILDEM_ENV_STRING} $(MAKE)
-    TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
+    #TEST_COMMAND        ${BUILDEM_ENV_STRING} $(MAKE) check
     INSTALL_COMMAND     ${BUILDEM_ENV_STRING} $(MAKE) install
 )
 

@@ -11,10 +11,10 @@ include (ExternalSource)
 include (BuildSupport)
 
 external_source (golang
-    1.2
-    go1.2.src.tar.gz
-    c2ace56f6b6413a5c6318b9527a8b763
-    http://go.googlecode.com/files)
+    1.3
+    go1.3.src.tar.gz
+    4b66d7249554181c314f139ea78920b1
+    http://golang.org/dl)
 
 message ("Installing ${golang_NAME} into build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${golang_NAME}
