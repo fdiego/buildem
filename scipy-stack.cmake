@@ -12,7 +12,7 @@ include (BuildSupport)
 
 
 include (python)
-include (sphinxcontrib-napoleon)    # Nice Sphinx docs
+include (sphinx)
 include (pyqt4)
 include (numpy)
 include (scipy)
@@ -27,7 +27,7 @@ include (nose)
 
 message ("Installing ${scipy-stack_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 ExternalProject_Add(${scipy-stack_NAME}
-    DEPENDS             ${python_NAME} ${sphinxcontrib-napoleon_NAME} ${pyqt4_NAME} ${numpy_NAME} ${scipy_NAME} ${matplotlib_NAME} ${statsmodels_NAME} ${scikit-image_NAME} ${scikit-learn_NAME} ${sympy_NAME} ${ipython_NAME} ${nose_NAME}
+    DEPENDS             ${python_NAME} ${sphinx_NAME} ${pyqt4_NAME} ${numpy_NAME} ${scipy_NAME} ${matplotlib_NAME} ${statsmodels_NAME} ${scikit-image_NAME} ${scikit-learn_NAME} ${sympy_NAME} ${ipython_NAME} ${nose_NAME}
     DOWNLOAD_COMMAND    ""
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ""

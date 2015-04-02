@@ -19,7 +19,7 @@ include (BuildSupport)
 include (python)
 include (pep8)
 include (pyqt4)
-include (sphinxcontrib-napoleon)    # Nice Sphinx docs
+include (sphinx)
 include (nose)
 include (rope)
 include (pyflakes)
@@ -40,7 +40,7 @@ external_source (spyder
 message ("Installing ${spyder_NAME} into FlyEM build area: ${BUILDEM_DIR} ...")
 
 ExternalProject_Add(${spyder_NAME}
-    DEPENDS             ${python_NAME} ${pep8_NAME} ${pyqt4_NAME} ${sphinxcontrib-napoleon} ${nose_NAME} ${rope_NAME} ${pyflakes_NAME} ${pygments_NAME} ${pylint_NAME} ${psutil_NAME} ${ipython_NAME}
+    DEPENDS             ${python_NAME} ${pep8_NAME} ${pyqt4_NAME} ${sphinx_NAME} ${nose_NAME} ${rope_NAME} ${pyflakes_NAME} ${pygments_NAME} ${pylint_NAME} ${psutil_NAME} ${ipython_NAME}
     PREFIX              ${BUILDEM_DIR}
     URL                 ${spyder_URL}
     URL_MD5             ${spyder_MD5}
